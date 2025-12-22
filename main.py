@@ -53,6 +53,15 @@ Screen height: {SCREEN_HEIGHT}
                 log_event("player_hit")
                 print("Game Over!")
                 sys.exit()
+        
+        for asteroid in asteroids:
+            for shot in shots:
+                if asteroid.position.distance_to(shot.position) <= asteroid.radius + shot.radius:
+                    log_event("asteroid_shot")
+                    asteroid.split()
+                    shot.kill() 
+
+
         for drawable_object in drawable:
             drawable_object.draw(screen)
         pygame.display.flip()
