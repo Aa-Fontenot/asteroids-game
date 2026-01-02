@@ -1,7 +1,12 @@
 from circleshape import * 
 from constants import *
 import random
-from logger import *
+from logger import * 
+
+
+def add_to_score(amount):
+    global current_score
+    current_score += amount
 
 
 
@@ -18,6 +23,7 @@ class Asteroid(CircleShape):
 
     def split(self):
         self.kill()
+        
         if self.radius <= ASTEROID_MIN_RADIUS:
             return
         else:
