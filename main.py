@@ -5,18 +5,17 @@ from player import *
 from asteroid import *
 from asteroidfield import AsteroidField
 from shot import Shot
+from scoreboard import *
 import sys
 
 
 def main():
     print(f"""
 Starting Asteroids with pygame version: {pygame.version.ver}
-Screen width: {SCREEN_WIDTH}
-Screen height: {SCREEN_HEIGHT}
 """)
 
     pygame.init()
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    screen = pygame.display.set_mode((1920,1080), flags=pygame.FULLSCREEN|pygame.SCALED)
 
     clock = pygame.time.Clock()
 
@@ -68,8 +67,6 @@ Screen height: {SCREEN_HEIGHT}
         dt = clock.tick(60) / 1000
         
         
-
-   
 
 
 
