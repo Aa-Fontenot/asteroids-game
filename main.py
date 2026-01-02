@@ -5,7 +5,6 @@ from player import *
 from asteroid import *
 from asteroidfield import AsteroidField
 from shot import Shot
-from scoreboard import *
 import sys
 
 
@@ -16,6 +15,11 @@ Starting Asteroids with pygame version: {pygame.version.ver}
 
     pygame.init()
     screen = pygame.display.set_mode((1920,1080), flags=pygame.FULLSCREEN|pygame.SCALED)
+
+    default_font = pygame.font.Font("./fonts/Hyperspace-JvEM.ttf", 52)
+
+    
+    
 
     clock = pygame.time.Clock()
 
@@ -34,6 +38,10 @@ Starting Asteroids with pygame version: {pygame.version.ver}
     asteroid_field = AsteroidField()
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
+    current_score = 0 
+
+
+
 
     
 
@@ -46,17 +54,24 @@ Starting Asteroids with pygame version: {pygame.version.ver}
                 raise SystemExit
         log_state()
         screen.fill("black")
+        score = default_font.render(f"Score: {current_score}", True, (255, 255, 255))
+        screen.blit(score, (0,0))
         updatable.update(dt)
         for asteroid in asteroids:
             if asteroid.position.distance_to(player.position) <= player.radius + asteroid.radius:
                 log_event("player_hit")
                 print("Game Over!")
                 sys.exit()
-        
         for asteroid in asteroids:
             for shot in shots:
                 if asteroid.position.distance_to(shot.position) <= asteroid.radius + shot.radius:
                     log_event("asteroid_shot")
+                    if asteroid.radius == ASTEROID_MAX_RADIUS:
+                        current_score += 1
+                    elif ASTEROID_MIN_RADIUS < asteroid.radius < ASTEROID_MAX_RADIUS:
+                        current_score += 2
+                    elif asteroid.radius == ASTEROID_MIN_RADIUS:
+                        current_score += 3 
                     asteroid.split()
                     shot.kill() 
 
@@ -67,7 +82,6 @@ Starting Asteroids with pygame version: {pygame.version.ver}
         dt = clock.tick(60) / 1000
         
         
-
 
 
 
