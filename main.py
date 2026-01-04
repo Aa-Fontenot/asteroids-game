@@ -16,7 +16,7 @@ Starting Asteroids with pygame version: {pygame.version.ver}
     pygame.init()
     screen = pygame.display.set_mode((1920,1080), flags=pygame.FULLSCREEN|pygame.SCALED)
 
-    default_font = pygame.font.Font("./fonts/Hyperspace-JvEM.ttf", 52)
+    default_font = pygame.font.Font("./Hyperspace.ttf", 52)
 
     
     
@@ -60,7 +60,7 @@ Starting Asteroids with pygame version: {pygame.version.ver}
         for asteroid in asteroids:
             if asteroid.position.distance_to(player.position) <= player.radius + asteroid.radius:
                 log_event("player_hit")
-                print("Game Over!")
+                print(f"Game Over!\nYour score was {current_score}")
                 sys.exit()
         for asteroid in asteroids:
             for shot in shots:
