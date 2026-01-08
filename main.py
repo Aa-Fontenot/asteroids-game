@@ -7,7 +7,7 @@ from asteroidfield import AsteroidField
 from shot import Shot
 import sys
 
-
+highscores_list = []
 def main():
     print(f"""
 Starting Asteroids with pygame version: {pygame.version.ver}
@@ -39,6 +39,9 @@ Starting Asteroids with pygame version: {pygame.version.ver}
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
     current_score = 0 
+    
+    def highscores_list_str_to_int_list(highscore_file):
+        
 
 
 
@@ -54,13 +57,36 @@ Starting Asteroids with pygame version: {pygame.version.ver}
                 raise SystemExit
         log_state()
         screen.fill("black")
+
+        try:
+            with open("./highscores.txt", "x") as file:
+                pass
+        except FileExistsError:
+            pass
+
+        with open("./highscores.txt", "r") as file:
+            highscores_list = file.read()
+            if len(highscores_list) == 0:
+                highest_score = 0
+            else:
+                highest_score = max(highscores_list)
+                    
+
+            
+            
+
+            
         score = default_font.render(f"Score: {current_score}", True, (255, 255, 255))
+        highscore = default_font.render(f"Highscore: {highest_score}", True, (255, 255, 255))
         screen.blit(score, (0,0))
+        screen.blit(highscore, (0, 52))
         updatable.update(dt)
         for asteroid in asteroids:
             if asteroid.position.distance_to(player.position) <= player.radius + asteroid.radius:
                 log_event("player_hit")
                 print(f"Game Over!\nYour score was {current_score}")
+                with open("./highscores.txt", "a") as file:
+                    file.write(f"'{current_score}'\n")
                 sys.exit()
         for asteroid in asteroids:
             for shot in shots:
@@ -74,6 +100,8 @@ Starting Asteroids with pygame version: {pygame.version.ver}
                         current_score += 3 
                     asteroid.split()
                     shot.kill() 
+        
+
 
 
         for drawable_object in drawable:
