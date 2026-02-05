@@ -1,0 +1,1 @@
+This is a project to help me understand game logic basics like rendering, hitboxes, and updating based on clock ticks within a game loop. I have movement, object collision, and scoring in the game, but I would like to add a start and pause menu to make the game a little more functional. 
